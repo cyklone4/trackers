@@ -6,14 +6,26 @@
     <title>Daily Schedule Tracker</title>
     <link rel="stylesheet" href="styles.css">
 </head>
-<body>
+<body data-page-title="Daily Schedule">
 
-<div class="current-time-display">
+<div class="current-time-display" data-current-task="Daily Schedule">
     <div class="time" id="currentTime">--:-- --</div>
     <div class="activity" id="currentActivity">Loading schedule...</div>
+  <button class="menu-toggle" type="button" aria-label="Open menu">☰</button>
 </div>
 
-<div style="padding: 1.5rem; max-width: 900px; margin: 0 auto; font-family: var(--font-sans);">
+<nav class="site-nav">
+    <a href="index.html" class="active">Schedule</a>
+    <a href="daily-tracker.html">Daily Tracker</a>
+    <a href="weekly-summary.html">Weekly Summary</a>
+    <a href="course-progress.html">Course Progress</a>
+    <a href="fat-loss-tracking.html">Fat Loss Tracking</a>
+    <a href="family-time-log.html">Family Time Log</a>
+    <a href="freelance-tracker.html">Freelance Tracker</a>
+    <a href="health-checklist.html">Health Checklist</a>
+</nav>
+
+<div class="page-content">
 
 <h2 style="font-size: 22px; font-weight: 500; margin-bottom: 0.5rem;">Your Complete Daily Schedule</h2>
 <p style="font-size: 14px; color: var(--color-text-secondary); margin-bottom: 2rem;">Fat loss journey • Family time • Learning • Freelancing</p>
