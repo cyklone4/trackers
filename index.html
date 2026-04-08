@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Daily Schedule Tracker</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<div style="padding: 1.5rem; max-width: 900px; margin: 0 auto; font-family: var(--font-sans);">
+
+<div class="current-time-display">
+    <div class="time" id="currentTime">--:-- --</div>
+    <div class="activity" id="currentActivity">Loading schedule...</div>
+</div>
+
+<h2 style="font-size: 22px; font-weight: 500; margin-bottom: 0.5rem;">Your Complete Daily Schedule</h2>
+<p style="font-size: 14px; color: var(--color-text-secondary); margin-bottom: 2rem;">Fat loss journey • Family time • Learning • Freelancing</p>
+
+<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 12px; margin-bottom: 2rem;">
+  <div style="background: var(--color-background-secondary); border-radius: var(--border-radius-md); padding: 1rem;">
+    <div style="font-size: 13px; color: var(--color-text-secondary); margin-bottom: 0.5rem;">Wake-up time</div>
+    <div style="font-size: 22px; font-weight: 500;">5:30 AM</div>
+  </div>
+  <div style="background: var(--color-background-secondary); border-radius: var(--border-radius-md); padding: 1rem;">
+    <div style="font-size: 13px; color: var(--color-text-secondary); margin-bottom: 0.5rem;">Bedtime</div>
+    <div style="font-size: 22px; font-weight: 500;">10:30 PM</div>
+  </div>
+  <div style="background: var(--color-background-secondary); border-radius: var(--border-radius-md); padding: 1rem;">
+    <div style="font-size: 13px; color: var(--color-text-secondary); margin-bottom: 0.5rem;">Sleep</div>
+    <div style="font-size: 22px; font-weight: 500;">7 hours</div>
+  </div>
+  <div style="background: var(--color-background-secondary); border-radius: var(--border-radius-md); padding: 1rem;">
+    <div style="font-size: 13px; color: var(--color-text-secondary); margin-bottom: 0.5rem;">Active hours</div>
+    <div style="font-size: 22px; font-weight: 500;">17 hours</div>
+  </div>
+</div>
+
+<div style="margin-bottom: 2rem;">
+  <h3 style="font-size: 16px; font-weight: 500; margin-bottom: 1rem;">Morning routine (5:30–8:30 AM)</h3>
+  
+  <div class="schedule-item" data-start="530" data-end="545" style="background: var(--color-background-primary); border-left: 4px solid #378ADD; border-radius: var(--border-radius-lg); border-top-left-radius: 0; border-bottom-left-radius: 0; padding: 1rem 1.25rem; margin-bottom: 0.75rem;">
+    <div style="font-size: 13px; color: var(--color-text-secondary); font-weight: 500; margin-bottom: 0.5rem;">5:30–5:45 AM (15 mins)</div>
+    <div style="font-size: 15px; font-weight: 500; margin-bottom: 0.5rem;">Wake up + hydration</div>
+    <div style="font-size: 13px; color: var(--color-text-secondary); line-height: 1.6;">Drink 500ml water with lemon, splash cold water on face to activate metabolism. Take multivitamin + omega-3 supplement.</div>
+  </div>
+
+  <div class="schedule-item" data-start="545" data-end="615" style="background: var(--color-background-primary); border-left: 4px solid #54A94D; border-radius: var(--border-radius-lg); border-top-left-radius: 0; border-bottom-left-radius: 0; padding: 1rem 1.25rem; margin-bottom: 0.75rem;">
+    <div style="font-size: 13px; color: var(--color-text-secondary); font-weight: 500; margin-bottom: 0.5rem;">5:45–6:15 AM (30 mins)</div>
+    <div style="font-size: 15px; font-weight: 500; margin-bottom: 0.5rem;">Scalp treatment + shower</div>
+    <div style="font-size: 13px; color: var(--color-text-secondary); line-height: 1.6;"><strong style="color: var(--color-text-primary);">Dandruff routine:</strong> Apply ketoconazole/zinc pyrithione shampoo (2-3x weekly), or salicylic acid (on alternate days). Massage scalp 3–5 mins. Rinse with lukewarm water. Hot water worsens dandruff. Condition only tips. Pat dry with towel—avoid vigorous rubbing. Follow with light scalp moisturizer (coconut oil or tea tree, 1-2x weekly).</div>
+  </div>
+
+  <div class="schedule-item" data-start="615" data-end="635" style="background: var(--color-background-primary); border-left: 4px solid #D4537E; border-radius: var(--border-radius-lg); border-top-left-radius: 0; border-bottom-left-radius: 0; padding: 1rem 1.25rem; margin-bottom: 0.75rem;">
+    <div style="font-size: 13px; color: var(--color-text-secondary); font-weight: 500; margin-bottom: 0.5rem;">6:15–6:35 AM (20 mins)</div>
+    <div style="font-size: 15px; font-weight: 500; margin-bottom: 0.5rem;">Reading + coffee</div>
+    <div style="font-size: 13px; color: var(--color-text-secondary); line-height: 1.6;">Light reading (fiction, articles, or learning prep). Black coffee or green tea (0 cal, boosts metabolism). Sit by window if possible for natural light exposure.</div>
+  </div>
+
+  <div class="schedule-item" data-start="635" data-end="735" style="background: var(--color-background-primary); border-left: 4px solid #BA7517; border-radius: var(--border-radius-lg); border-top-left-radius: 0; border-bottom-left-radius: 0; padding: 1rem 1.25rem; margin-bottom: 0.75rem;">
+    <div style="font-size: 13px; color: var(--color-text-secondary); font-weight: 500; margin-bottom: 0.5rem;">6:35–7:35 AM (1 hour)</div>
+    <div style="font-size: 15px; font-weight: 500; margin-bottom: 0.5rem;">Course 1 - structured learning</div>
+    <div style="font-size: 13px; color: var(--color-text-secondary); line-height: 1.6;">Most cognitively demanding course. Your brain is sharpest now. Focus on concept videos, note-taking, problem-solving.</div>
+  </div>
+
+  <div class="schedule-item" data-start="735" data-end="825" style="background: var(--color-background-primary); border-left: 4px solid #888780; border-radius: var(--border-radius-lg); border-top-left-radius: 0; border-bottom-left-radius: 0; padding: 1rem 1.25rem; margin-bottom: 0.75rem;">
+    <div style="font-size: 13px; color: var(--color-text-secondary); font-weight: 500; margin-bottom: 0.5rem;">7:35–8:25 AM (50 mins)</div>
+    <div style="font-size: 15px; font-weight: 500; margin-bottom: 0.5rem;">Breakfast + family time</div>
+    <div style="font-size: 13px; color: var(--color-text-secondary); line-height: 1.6;"><strong style="color: var(--color-text-primary);">Breakfast (for fat loss):</strong> 2 scrambled eggs + whole wheat toast + veggies OR oatmeal + berries + almonds. 350–400 calories, high protein for satiety. Eat with wife & son before office. Quality family time—talk, laugh, no screens.</div>
+  </div>
+
+  <div class="schedule-item" data-start="825" data-end="835" style="background: var(--color-background-primary); border-left: 4px solid #888780; border-radius: var(--border-radius-lg); border-top-left-radius: 0; border-bottom-left-radius: 0; padding: 1rem 1.25rem;">
+    <div style="font-size: 13px; color: var(--color-text-secondary); font-weight: 500; margin-bottom: 0.5rem;">8:25–8:35 AM (10 mins)</div>
+    <div style="font-size: 15px; font-weight: 500; margin-bottom: 0.5rem;">Prep + commute</div>
+    <div style="font-size: 13px; color: var(--color-text-secondary); line-height: 1.6;">Get ready for office. Pack water bottle (aim for 3–4L throughout day for appetite suppression & metabolism).</div>
+  </div>
+</div>
+
+<div style="margin-bottom: 2rem;">
+  <h3 style="font-size: 16px; font-weight: 500; margin-bottom: 1rem;">Office hours (8:35 AM–5:30 PM)</h3>
+  
+  <div class="schedule-item" data-start="835" data-end="1230" style="background: var(--color-background-primary); border-left: 4px solid #378ADD; border-radius: var(--border-radius-lg); border-top-left-radius: 0; border-bottom-left-radius: 0; padding: 1rem 1.25rem; margin-bottom: 0.75rem;">
+    <div style="font-size: 13px; color: var(--color-text-secondary); font-weight: 500; margin-bottom: 0.5rem;">8:35 AM–12:30 PM (4 hours)</div>
+    <div style="font-size: 15px; font-weight: 500; margin-bottom: 0.5rem;">Deep work block</div>
+    <div style="font-size: 13px; color: var(--color-text-secondary); line-height: 1.6;">Focus on high-priority tasks. Drink water consistently. No snacking.</div>
+  </div>
+
+  <div class="schedule-item" data-start="1230" data-end="1330" style="background: var(--color-background-primary); border-left: 4px solid #888780; border-radius: var(--border-radius-lg); border-top-left-radius: 0; border-bottom-left-radius: 0; padding: 1rem 1.25rem; margin-bottom: 0.75rem;">
+    <div style="font-size: 13px; color: var(--color-text-secondary); font-weight: 500; margin-bottom: 0.5rem;">12:30–1:30 PM (1 hour)</div>
+    <div style="font-size: 15px; font-weight: 500; margin-bottom: 0.5rem;">Lunch break</div>
+    <div style="font-size: 13px; color: var(--color-text-secondary); line-height: 1.6;"><strong style="color: var(--color-text-primary);">Lunch (for fat loss):</strong> Grilled chicken breast (150g) + brown rice (100g) + veggies (broccoli/spinach). ~450–500 cal, high protein. Slow eating, chew well. Walk 5–10 mins after to aid digestion & reduce blood sugar spike.</div>
+  </div>
+
+  <div class="schedule-item" data-start="1330" data-end="1500" style="background: var(--color-background-primary); border-left: 4px solid #378ADD; border-radius: var(--border-radius-lg); border-top-left-radius: 0; border-bottom-left-radius: 0; padding: 1rem 1.25rem; margin-bottom: 0.75rem;">
+    <div style="font-size: 13px; color: var(--color-text-secondary); font-weight: 500; margin-bottom: 0.5rem;">1:30–3:00 PM (1.5 hours)</div>
+    <div style="font-size: 15px; font-weight: 500; margin-bottom: 0.5rem;">Meetings + secondary work</div>
+    <div style="font-size: 13px; color: var(--color-text-secondary); line-height: 1.6;">Afternoon energy dip expected. Drink water, take short 2-min walks between meetings to stay alert.</div>
+  </div>
+
+  <div class="schedule-item" data-start="1500" data-end="1600" style="background: var(--color-background-primary); border-left: 4px solid #888780; border-radius: var(--border-radius-lg); border-top-left-radius: 0; border-bottom-left-radius: 0; padding: 1rem 1.25rem; margin-bottom: 0.75rem;">
+    <div style="font-size: 13px; color: var(--color-text-secondary); font-weight: 500; margin-bottom: 0.5rem;">3:00–4:00 PM (1 hour)</div>
+    <div style="font-size: 15px; font-weight: 500; margin-bottom: 0.5rem;">Snack + work</div>
+    <div style="font-size: 13px; color: var(--color-text-secondary); line-height: 1.6;"><strong style="color: var(--color-text-primary);">Snack:</strong> Protein shake (20g protein) with berries or Greek yogurt + almonds. ~150–180 cal. Prevents overeating at dinner, stabilizes energy.</div>
+  </div>
+
+  <div class="schedule-item" data-start="1600" data-end="1730" style="background: var(--color-background-primary); border-left: 4px solid #378ADD; border-radius: var(--border-radius-lg); border-top-left-radius: 0; border-bottom-left-radius: 0; padding: 1rem 1.25rem;">
+    <div style="font-size: 13px; color: var(--color-text-secondary); font-weight: 500; margin-bottom: 0.5rem;">4:00–5:30 PM (1.5 hours)</div>
+    <div style="font-size: 15px; font-weight: 500; margin-bottom: 0.5rem;">Final push + wrap-up</div>
+    <div style="font-size: 13px; color: var(--color-text-secondary); line-height: 1.6;">Close out tasks for the day. Prepare to-do list for next day to reduce mental load.</div>
+  </div>
+</div>
+
+<div style="margin-bottom: 2rem;">
+  <h3 style="font-size: 16px; font-weight: 500; margin-bottom: 1rem;">Evening routine (5:30 PM–10:30 PM)</h3>
+  
+  <div class="schedule-item" data-start="1730" data-end="1800" style="background: var(--color-background-primary); border-left: 4px solid #54A94D; border-radius: var(--border-radius-lg); border-top-left-radius: 0; border-bottom-left-radius: 0; padding: 1rem 1.25rem; margin-bottom: 0.75rem;">
+    <div style="font-size: 13px; color: var(--color-text-secondary); font-weight: 500; margin-bottom: 0.5rem;">5:30–6:00 PM (30 mins)</div>
+    <div style="font-size: 15px; font-weight: 500; margin-bottom: 0.5rem;">Pre-gym routine + hydration</div>
+    <div style="font-size: 13px; color: var(--color-text-secondary); line-height: 1.6;">Change into gym clothes. Drink 400ml water + 1 banana (quick carbs for workout). Optional: 200mg caffeine (coffee/tea) 30 mins before gym for fat-burning boost.</div>
+  </div>
+
+  <div class="schedule-item" data-start="1800" data-end="1915" style="background: var(--color-background-primary); border-left: 4px solid #54A94D; border-radius: var(--border-radius-lg); border-top-left-radius: 0; border-bottom-left-radius: 0; padding: 1rem 1.25rem; margin-bottom: 0.75rem;">
+    <div style="font-size: 13px; color: var(--color-text-secondary); font-weight: 500; margin-bottom: 0.5rem;">6:00–7:15 PM (1 hour 15 mins)</div>
+    <div style="font-size: 15px; font-weight: 500; margin-bottom: 0.5rem;">GYM (calorie deficit priority)</div>
+    <div style="font-size: 13px; color: var(--color-text-secondary); line-height: 1.6;"><strong style="color: var(--color-text-primary);">Fat loss focused routine:</strong> 10 min warm-up (treadmill/rowing). 40 mins resistance training (compound lifts: squats, deadlifts, bench, rows—builds muscle preserves metabolism). 15 mins cardio (HIIT or steady state). This combo maximizes calorie burn + preserves lean mass. Drink water every 10–15 mins.</div>
+  </div>
+
+  <div class="schedule-item" data-start="1915" data-end="1945" style="background: var(--color-background-primary); border-left: 4px solid #54A94D; border-radius: var(--border-radius-lg); border-top-left-radius: 0; border-bottom-left-radius: 0; padding: 1rem 1.25rem; margin-bottom: 0.75rem;">
+    <div style="font-size: 13px; color: var(--color-text-secondary); font-weight: 500; margin-bottom: 0.5rem;">7:15–7:45 PM (30 mins)</div>
+    <div style="font-size: 15px; font-weight: 500; margin-bottom: 0.5rem;">Post-gym cleanup + shower</div>
+    <div style="font-size: 13px; color: var(--color-text-secondary); line-height: 1.6;">Shower immediately (sweat = scalp irritation risk for dandruff). Use same scalp routine if needed. Drink 500ml water to rehydrate. Change into comfy clothes.</div>
+  </div>
+
+  <div class="schedule-item" data-start="1945" data-end="2030" style="background: var(--color-background-primary); border-left: 4px solid #888780; border-radius: var(--border-radius-lg); border-top-left-radius: 0; border-bottom-left-radius: 0; padding: 1rem 1.25rem; margin-bottom: 0.75rem;">
+    <div style="font-size: 13px; color: var(--color-text-secondary); font-weight: 500; margin-bottom: 0.5rem;">7:45–8:30 PM (45 mins)</div>
+    <div style="font-size: 15px; font-weight: 500; margin-bottom: 0.5rem;">Dinner + family time</div>
+    <div style="font-size: 13px; color: var(--color-text-secondary); line-height: 1.6;"><strong style="color: var(--color-text-primary);">Dinner (for fat loss):</strong> Fish/lean turkey (150g) + sweet potato (100g) + salad. ~450 cal, high protein. Eat with wife & son. No screens during meal. Quality conversation = stress relief & better digestion.</div>
+  </div>
+
+  <div class="schedule-item" data-start="2030" data-end="2130" style="background: var(--color-background-primary); border-left: 4px solid #BA7517; border-radius: var(--border-radius-lg); border-top-left-radius: 0; border-bottom-left-radius: 0; padding: 1rem 1.25rem; margin-bottom: 0.75rem;">
+    <div style="font-size: 13px; color: var(--color-text-secondary); font-weight: 500; margin-bottom: 0.5rem;">8:30–9:30 PM (1 hour)</div>
+    <div style="font-size: 15px; font-weight: 500; margin-bottom: 0.5rem;">Course 2 - hands-on practice</div>
+    <div style="font-size: 13px; color: var(--color-text-secondary); line-height: 1.6;">Post-dinner energy boost. Focus on practical, project-based learning. Coding challenges, problem sets, etc.</div>
+  </div>
+
+  <div class="schedule-item" data-start="2130" data-end="2200" style="background: var(--color-background-primary); border-left: 4px solid #0F6E56; border-radius: var(--border-radius-lg); border-top-left-radius: 0; border-bottom-left-radius: 0; padding: 1rem 1.25rem; margin-bottom: 0.75rem;">
+    <div style="font-size: 13px; color: var(--color-text-secondary); font-weight: 500; margin-bottom: 0.5rem;">9:30–10:00 PM (30 mins)</div>
+    <div style="font-size: 15px; font-weight: 500; margin-bottom: 0.5rem;">Course 3 OR freelance work</div>
+    <div style="font-size: 13px; color: var(--color-text-secondary); line-height: 1.6;">Rotate between third course and freelance projects depending on weekly focus. Light, lower-intensity learning.</div>
+  </div>
+
+  <div class="schedule-item" data-start="2200" data-end="2230" style="background: var(--color-background-primary); border-left: 4px solid #888780; border-radius: var(--border-radius-lg); border-top-left-radius: 0; border-bottom-left-radius: 0; padding: 1rem 1.25rem;">
+    <div style="font-size: 13px; color: var(--color-text-secondary); font-weight: 500; margin-bottom: 0.5rem;">10:00–10:30 PM (30 mins)</div>
+    <div style="font-size: 15px; font-weight: 500; margin-bottom: 0.5rem;">Wind down + sleep prep</div>
+    <div style="font-size: 13px; color: var(--color-text-secondary); line-height: 1.6;">No screens after 10:00 PM (blue light kills melatonin). Read fiction, meditate, or journal. Dim lights. Set room temp to 16–18°C for better sleep (impacts metabolism recovery & fat loss). Lay out clothes for next day.</div>
+  </div>
+</div>
+
+<div style="background: var(--color-background-secondary); border-radius: var(--border-radius-lg); padding: 1.25rem; margin-bottom: 2rem;">
+  <h3 style="font-size: 16px; font-weight: 500; margin-bottom: 1rem;">Daily nutrition (fat loss optimized)</h3>
+  <table style="width: 100%; font-size: 13px; border-collapse: collapse;">
+    <tr style="border-bottom: 0.5px solid var(--color-border-tertiary);">
+      <td style="padding: 8px 0; color: var(--color-text-secondary);">Breakfast (7:35 AM)</td>
+      <td style="text-align: right; padding: 8px 0;">350–400 cal</td>
+    </tr>
+    <tr style="border-bottom: 0.5px solid var(--color-border-tertiary);">
+      <td style="padding: 8px 0; color: var(--color-text-secondary);">Lunch (12:30 PM)</td>
+      <td style="text-align: right; padding: 8px 0;">450–500 cal</td>
+    </tr>
+    <tr style="border-bottom: 0.5px solid var(--color-border-tertiary);">
+      <td style="padding: 8px 0; color: var(--color-text-secondary);">Snack (3:00 PM)</td>
+      <td style="text-align: right; padding: 8px 0;">150–180 cal</td>
+    </tr>
+    <tr style="border-bottom: 0.5px solid var(--color-border-tertiary);">
+      <td style="padding: 8px 0; color: var(--color-text-secondary);">Dinner (7:45 PM)</td>
+      <td style="text-align: right; padding: 8px 0;">450 cal</td>
+    </tr>
+    <tr>
+      <td style="padding: 8px 0; font-weight: 500; color: var(--color-text-primary);">Total daily</td>
+      <td style="text-align: right; padding: 8px 0; font-weight: 500; color: var(--color-text-primary);">~1,400–1,550 cal</td>
+    </tr>
+  </table>
+  <p style="font-size: 13px; color: var(--color-text-secondary); margin-top: 1rem; line-height: 1.6;"><strong style="color: var(--color-text-primary);">Macro targets:</strong> 120–130g protein daily (high satiety, muscle preservation), 130–150g carbs (mostly complex, timed around workouts), 40–50g fat (healthy sources). Drink 3–4L water daily. This creates a sustainable 300–500 cal deficit for steady fat loss.</p>
+</div>
+
+<div style="background: var(--color-background-secondary); border-radius: var(--border-radius-lg); padding: 1.25rem;">
+  <h3 style="font-size: 16px; font-weight: 500; margin-bottom: 1rem;">Weekly tracking checklist</h3>
+  <div style="font-size: 13px; color: var(--color-text-secondary); line-height: 1.8;">
+    <div style="margin-bottom: 0.5rem;">✓ Weight tracking (same time weekly—Sunday morning)</div>
+    <div style="margin-bottom: 0.5rem;">✓ Course progress (hours completed per course)</div>
+    <div style="margin-bottom: 0.5rem;">✓ Gym consistency (sessions completed)</div>
+    <div style="margin-bottom: 0.5rem;">✓ Dandruff check (scalp health, treatment frequency)</div>
+    <div style="margin-bottom: 0.5rem;">✓ Freelance work (hours billed/projects completed)</div>
+    <div style="margin-bottom: 0.5rem;">✓ Family time (quality conversations logged)</div>
+    <div style="margin-bottom: 0.5rem;">✓ Sleep consistency (avg hours, quality)</div>
+    <div>✓ Energy levels (rate 1–10 each day)</div>
+  </div>
+</div>
+
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
