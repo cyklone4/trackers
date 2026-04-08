@@ -44,19 +44,22 @@ function updateSchedule() {
             item.classList.add('current');
             
             // Extract activity title from the item
-            const titleElement = item.querySelector('[style*="font-weight: 500"]');
-            if (titleElement && titleElement.textContent) {
-                // Get the second occurrence of bold text (the activity name)
-                const boldElements = item.querySelectorAll('[style*="font-weight: 500"]');
-                if (boldElements.length > 1) {
-                    activityDisplay.textContent = boldElements[1].textContent.trim();
-                } else if (boldElements.length > 0) {
-                    activityDisplay.textContent = boldElements[0].textContent.trim();
-                }
+            const boldElements = item.querySelectorAll('[style*="font-weight: 500"]');
+            let taskText = '';
+            if (boldElements.length > 1) {
+                taskText = boldElements[1].textContent.trim();
+            } else if (boldElements.length > 0) {
+                taskText = boldElements[0].textContent.trim();
             }
             
-            // Scroll to current item
-            item.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            activityDisplay.textContent = taskText ? `Now: ${taskText}` : 'Now: current task';
+
+            // Scroll to current item once on page load
+            if (!window.currentScrollDone) {
+                window.currentScrollDone = true;
+                setTimeout(() => scrollToCurrentTask(item), 80);
+            }
+
             found = true;
         }
     });
@@ -66,8 +69,57 @@ function updateSchedule() {
     }
 }
 
+function scrollToCurrentTask(item) {
+    const header = document.querySelector('.current-time-display');
+    const headerHeight = header ? header.offsetHeight + 16 : 0;
+    const itemTop = item.getBoundingClientRect().top + window.scrollY;
+    const targetScroll = Math.max(0, itemTop - headerHeight - 12);
+    window.scrollTo({ top: targetScroll, behavior: 'smooth' });
+}
+
 // Update schedule every minute
 setInterval(updateSchedule, 60000);
 
 // Update immediately on page load
 updateSchedule();
+
+// Handle scroll to make header minimalist
+function handleHeaderScroll() {
+    const header = document.querySelector('.current-time-display');
+    const isMobile = window.innerWidth <= 768;
+    
+    if (isMobile) {
+        // On mobile, trigger minimalist view when scrolled past initial header height
+        const scrollThreshold = window.innerHeight * 0.4; // 40% of viewport height
+        
+        if (window.scrollY > scrollThreshold) {
+            header.classList.add('scrolled');
+            document.body.classList.add('scrolled-state');
+        } else {
+            header.classList.remove('scrolled');
+            document.body.classList.remove('scrolled-state');
+        }
+    } else {
+        // On desktop, keep it simple - just show time when scrolling
+        if (window.scrollY > 50) {
+            header.classList.add('scrolled');
+        } else {
+            header.classList.remove('scrolled');
+        }
+    }
+}
+
+// Listen for scroll events
+window.addEventListener('scroll', handleHeaderScroll, { passive: true });
+
+// Also run on resize to handle responsive changes
+window.addEventListener('resize', handleHeaderScroll);
+
+// Scroll to current task and initialize header state on load
+window.addEventListener('load', () => {
+    updateSchedule();
+    handleHeaderScroll();
+});
+
+// Initial call
+handleHeaderScroll();
