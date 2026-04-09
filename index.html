@@ -49,6 +49,7 @@ let currentScheduleConfig = null;
     currentScheduleConfig = await loadTrackerConfig('schedule-config.json');
     if (currentScheduleConfig) {
         generateSchedulePage(currentScheduleConfig);
+        updateSchedule(); // Update schedule highlighting after generating the page
     }
 
     // Export config
@@ -82,6 +83,7 @@ let currentScheduleConfig = null;
                 pageContent.appendChild(p);
                 pageContent.appendChild(controls);
                 generateSchedulePage(currentScheduleConfig);
+                updateSchedule(); // Update after regenerating
             } catch (error) {
                 alert('Invalid JSON file');
             }

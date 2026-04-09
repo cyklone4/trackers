@@ -369,8 +369,8 @@ function attachMenuListeners() {
 // Update schedule every minute
 setInterval(updateSchedule, 60000);
 
-// Update immediately on page load
-updateSchedule();
+// Update immediately on page load - called by individual pages after content is ready
+// updateSchedule();
 
 // Handle scroll to make header minimalist
 function handleHeaderScroll() {
