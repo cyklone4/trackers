@@ -11,7 +11,7 @@
 <div class="current-time-display" data-current-task="Daily Schedule">
     <div class="time" id="currentTime">--:-- --</div>
     <div class="activity" id="currentActivity">Loading schedule...</div>
-  <button class="menu-toggle" type="button" aria-label="Open menu">☰</button>
+  <button id="menu-toggle" class="menu-toggle" type="button" aria-label="Open menu" onclick="document.querySelector('.site-nav')?.classList.toggle('open')">☰</button>
 </div>
 
 <nav class="site-nav">
@@ -23,6 +23,7 @@
     <a href="family-time-log.html">Family Time Log</a>
     <a href="freelance-tracker.html">Freelance Tracker</a>
     <a href="health-checklist.html">Health Checklist</a>
+    <a href="#" id="settings-nav-link">Settings</a>
 </nav>
 
 <div class="page-content">
@@ -30,85 +31,113 @@
 <h2 style="font-size: 22px; font-weight: 500; margin-bottom: 0.5rem;">Your Complete Daily Schedule</h2>
 <p style="font-size: 14px; color: var(--color-text-secondary); margin-bottom: 2rem;">Fat loss journey • Family time • Learning • Freelancing</p>
 
-<div class="config-controls" style="margin-bottom: 1rem;">
-    <button id="settings-btn">Settings</button>
-    <button id="download-template">Download Template</button>
-    <button id="export-schedule-config">Export Config</button>
-    <input type="file" id="import-schedule-config" accept=".json" style="display: none;">
-    <label for="import-schedule-config" style="cursor: pointer; padding: 0.5rem 1rem; background: #007acc; color: white; border-radius: 4px;">Import Config</label>
-</div>
 
 <!-- Settings Modal -->
-<div id="settings-modal" class="modal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 1000;">
-    <div class="modal-content" style="background: var(--color-background-primary); margin: 5% auto; padding: 0; width: 90%; max-width: 800px; border-radius: var(--border-radius-lg); max-height: 80%; overflow: hidden;">
-        <div class="modal-header" style="padding: 1rem; border-bottom: 1px solid var(--color-border-primary); display: flex; justify-content: space-between; align-items: center;">
-            <h3 style="margin: 0; font-size: 18px;">Schedule Settings</h3>
-            <button id="close-modal" style="background: none; border: none; font-size: 24px; cursor: pointer; color: var(--color-text-secondary);">&times;</button>
+<div id="settings-modal" class="modal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); backdrop-filter: blur(4px); z-index: 1000; animation: fadeIn 0.3s ease-out;">
+    <div class="modal-content" style="background: var(--color-background-primary); margin: 2% auto; padding: 0; width: 95%; max-width: 900px; border-radius: var(--border-radius-lg); box-shadow: 0 20px 60px rgba(0,0,0,0.3); max-height: 90%; overflow: hidden; animation: slideIn 0.3s ease-out;">
+        <div class="modal-header" style="padding: 1.5rem 2rem; border-bottom: 1px solid var(--color-border-primary); display: flex; justify-content: space-between; align-items: center; background: linear-gradient(135deg, var(--color-background-secondary) 0%, var(--color-background-primary) 100%);">
+            <h3 style="margin: 0; font-size: 20px; font-weight: 600; color: var(--color-text-primary);">Schedule Settings</h3>
+            <button id="close-modal" style="background: none; border: none; font-size: 28px; cursor: pointer; color: var(--color-text-secondary); transition: color 0.2s; padding: 4px; border-radius: 50%;">&times;</button>
         </div>
-        <div class="modal-body" style="padding: 1rem; max-height: 60vh; overflow-y: auto;">
-            <div class="tabs" style="display: flex; border-bottom: 1px solid var(--color-border-primary); margin-bottom: 1rem;">
-                <button class="tab-btn active" data-tab="general">General</button>
-                <button class="tab-btn" data-tab="stats">Stats</button>
-                <button class="tab-btn" data-tab="schedule">Schedule</button>
-                <button class="tab-btn" data-tab="nutrition">Nutrition</button>
-                <button class="tab-btn" data-tab="checklist">Checklist</button>
+        <div class="modal-body" style="padding: 2rem; max-height: 65vh; overflow-y: auto;">
+            <div class="tabs" style="display: flex; border-bottom: 2px solid var(--color-border-primary); margin-bottom: 2rem; background: var(--color-background-secondary); border-radius: var(--border-radius-md) var(--border-radius-md) 0 0; padding: 0.5rem; gap: 0.25rem;">
+                <button class="tab-btn active" data-tab="config" style="padding: 0.75rem 1.5rem; border: none; background: transparent; color: var(--color-text-secondary); cursor: pointer; border-radius: var(--border-radius-md); transition: all 0.2s; font-weight: 500;">Config</button>
+                <button class="tab-btn" data-tab="actions" style="padding: 0.75rem 1.5rem; border: none; background: transparent; color: var(--color-text-secondary); cursor: pointer; border-radius: var(--border-radius-md); transition: all 0.2s; font-weight: 500;">Actions</button>
             </div>
             <div class="tab-content">
-                <div id="general-tab" class="tab-pane active">
-                    <div class="form-group" style="margin-bottom: 1rem;">
-                        <label>Title:</label>
-                        <input type="text" id="config-title" style="width: 100%; padding: 0.5rem; border: 1px solid var(--color-border-primary); border-radius: 4px;">
-                    </div>
-                    <div class="form-group" style="margin-bottom: 1rem;">
-                        <label>Subtitle:</label>
-                        <input type="text" id="config-subtitle" style="width: 100%; padding: 0.5rem; border: 1px solid var(--color-border-primary); border-radius: 4px;">
+                <div id="config-tab" class="tab-pane active">
+                    <div style="background: var(--color-background-secondary); padding: 1.5rem; border-radius: var(--border-radius-md); margin-bottom: 1rem;">
+                        <h4 style="margin: 0 0 1rem 0; color: var(--color-text-primary); font-size: 16px;">Basic Information</h4>
+                        <div class="form-group" style="margin-bottom: 1rem;">
+                            <label style="display: block; margin-bottom: 0.5rem; font-weight: 500; color: var(--color-text-primary);">Title:</label>
+                            <input type="text" id="config-title" style="width: 100%; padding: 0.75rem; border: 2px solid var(--color-border-primary); border-radius: var(--border-radius-md); font-size: 14px; transition: border-color 0.2s; background: var(--color-background-primary); color: var(--color-text-primary);" placeholder="Enter schedule title">
+                        </div>
+                        <div class="form-group" style="margin-bottom: 2rem;">
+                            <label style="display: block; margin-bottom: 0.5rem; font-weight: 500; color: var(--color-text-primary);">Subtitle:</label>
+                            <input type="text" id="config-subtitle" style="width: 100%; padding: 0.75rem; border: 2px solid var(--color-border-primary); border-radius: var(--border-radius-md); font-size: 14px; transition: border-color 0.2s; background: var(--color-background-primary); color: var(--color-text-primary);" placeholder="Enter subtitle">
+                        </div>
+
+                        <h4 style="margin: 0 0 1rem 0; color: var(--color-text-primary); font-size: 16px;">Dashboard Statistics</h4>
+                        <div id="stats-editor" style="margin-bottom: 2rem;">
+                            <!-- Stats will be populated here -->
+                        </div>
+                        <button id="add-stat" style="margin-bottom: 2rem; padding: 0.75rem 1.5rem; background: linear-gradient(135deg, #28a745 0%, #20c997 100%); color: white; border: none; border-radius: var(--border-radius-md); cursor: pointer; font-weight: 500; transition: transform 0.2s; box-shadow: 0 2px 8px rgba(40, 167, 69, 0.3);">Add Stat</button>
+
+                        <h4 style="margin: 0 0 1rem 0; color: var(--color-text-primary); font-size: 16px;">Schedule Sections</h4>
+                        <div id="sections-editor" style="margin-bottom: 2rem;">
+                            <!-- Sections will be populated here -->
+                        </div>
+                        <button id="add-section" style="margin-bottom: 2rem; padding: 0.75rem 1.5rem; background: linear-gradient(135deg, #007acc 0%, #0056b3 100%); color: white; border: none; border-radius: var(--border-radius-md); cursor: pointer; font-weight: 500; transition: transform 0.2s; box-shadow: 0 2px 8px rgba(0, 122, 204, 0.3);">Add Section</button>
+
+                        <h4 style="margin: 0 0 1rem 0; color: var(--color-text-primary); font-size: 16px;">Nutrition Plan</h4>
+                        <div class="form-group" style="margin-bottom: 1rem;">
+                            <label style="display: block; margin-bottom: 0.5rem; font-weight: 500; color: var(--color-text-primary);">Section Title:</label>
+                            <input type="text" id="nutrition-title" style="width: 100%; padding: 0.75rem; border: 2px solid var(--color-border-primary); border-radius: var(--border-radius-md); font-size: 14px; transition: border-color 0.2s; background: var(--color-background-primary); color: var(--color-text-primary);" placeholder="Nutrition section title">
+                        </div>
+                        <div id="meals-editor" style="margin-bottom: 1rem;">
+                            <!-- Meals will be populated here -->
+                        </div>
+                        <button id="add-meal" style="margin-bottom: 1rem; padding: 0.75rem 1.5rem; background: linear-gradient(135deg, #fd7e14 0%, #e8680d 100%); color: white; border: none; border-radius: var(--border-radius-md); cursor: pointer; font-weight: 500; transition: transform 0.2s; box-shadow: 0 2px 8px rgba(253, 126, 20, 0.3);">Add Meal</button>
+                        <div class="form-group" style="margin-bottom: 1rem;">
+                            <label style="display: block; margin-bottom: 0.5rem; font-weight: 500; color: var(--color-text-primary);">Total Calories:</label>
+                            <input type="text" id="nutrition-total" style="width: 100%; padding: 0.75rem; border: 2px solid var(--color-border-primary); border-radius: var(--border-radius-md); font-size: 14px; transition: border-color 0.2s; background: var(--color-background-primary); color: var(--color-text-primary);" placeholder="Total daily calories">
+                        </div>
+                        <div class="form-group" style="margin-bottom: 2rem;">
+                            <label style="display: block; margin-bottom: 0.5rem; font-weight: 500; color: var(--color-text-primary);">Description:</label>
+                            <textarea id="nutrition-description" rows="3" style="width: 100%; padding: 0.75rem; border: 2px solid var(--color-border-primary); border-radius: var(--border-radius-md); font-size: 14px; transition: border-color 0.2s; background: var(--color-background-primary); color: var(--color-text-primary); resize: vertical;" placeholder="Nutrition description and tips"></textarea>
+                        </div>
+
+                        <h4 style="margin: 0 0 1rem 0; color: var(--color-text-primary); font-size: 16px;">Daily Checklist</h4>
+                        <div class="form-group" style="margin-bottom: 1rem;">
+                            <label style="display: block; margin-bottom: 0.5rem; font-weight: 500; color: var(--color-text-primary);">Section Title:</label>
+                            <input type="text" id="checklist-title" style="width: 100%; padding: 0.75rem; border: 2px solid var(--color-border-primary); border-radius: var(--border-radius-md); font-size: 14px; transition: border-color 0.2s; background: var(--color-background-primary); color: var(--color-text-primary);" placeholder="Checklist section title">
+                        </div>
+                        <div id="items-editor">
+                            <!-- Items will be populated here -->
+                        </div>
+                        <button id="add-item" style="margin-top: 1rem; padding: 0.75rem 1.5rem; background: linear-gradient(135deg, #6f42c1 0%, #5a32a3 100%); color: white; border: none; border-radius: var(--border-radius-md); cursor: pointer; font-weight: 500; transition: transform 0.2s; box-shadow: 0 2px 8px rgba(111, 66, 193, 0.3);">Add Item</button>
                     </div>
                 </div>
-                <div id="stats-tab" class="tab-pane">
-                    <div id="stats-editor">
-                        <!-- Stats will be populated here -->
+
+
+
+
+                <div id="actions-tab" class="tab-pane">
+                    <div style="background: var(--color-background-secondary); padding: 1.5rem; border-radius: var(--border-radius-md); margin-bottom: 1rem;">
+                        <h4 style="margin: 0 0 1rem 0; color: var(--color-text-primary); font-size: 16px;">Configuration Actions</h4>
+                        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem;">
+                            <button id="download-template" style="padding: 1rem; background: linear-gradient(135deg, #17a2b8 0%, #138496 100%); color: white; border: none; border-radius: var(--border-radius-md); cursor: pointer; font-weight: 500; transition: transform 0.2s; box-shadow: 0 2px 8px rgba(23, 162, 184, 0.3); display: flex; align-items: center; justify-content: center; gap: 0.5rem;">
+                                Download Template
+                            </button>
+                            <button id="export-schedule-config" style="padding: 1rem; background: linear-gradient(135deg, #28a745 0%, #20c997 100%); color: white; border: none; border-radius: var(--border-radius-md); cursor: pointer; font-weight: 500; transition: transform 0.2s; box-shadow: 0 2px 8px rgba(40, 167, 69, 0.3); display: flex; align-items: center; justify-content: center; gap: 0.5rem;">
+                                Export Config
+                            </button>
+                            <label for="import-schedule-config" style="padding: 1rem; background: linear-gradient(135deg, #fd7e14 0%, #e8680d 100%); color: white; border-radius: var(--border-radius-md); cursor: pointer; font-weight: 500; transition: transform 0.2s; box-shadow: 0 2px 8px rgba(253, 126, 20, 0.3); display: flex; align-items: center; justify-content: center; gap: 0.5rem; margin: 0;">
+                                Import Config
+                            </label>
+                            <input type="file" id="import-schedule-config" accept=".json" style="display: none;">
+                        </div>
+                        <div style="margin-top: 1.5rem; padding: 1rem; background: var(--color-background-primary); border-radius: var(--border-radius-md); border: 1px solid var(--color-border-primary);">
+                            <h5 style="margin: 0 0 0.5rem 0; color: var(--color-text-primary); font-size: 14px;">Tips</h5>
+                            <ul style="margin: 0; padding-left: 1.2rem; color: var(--color-text-secondary); font-size: 13px; line-height: 1.6;">
+                                <li>Download the template to share with others or start fresh</li>
+                                <li>Export your current config to backup or transfer</li>
+                                <li>Import a config file to load someone else's setup</li>
+                                <li>All changes are applied immediately when you save</li>
+                            </ul>
+                        </div>
                     </div>
-                    <button id="add-stat" style="margin-top: 1rem; padding: 0.5rem 1rem; background: #28a745; color: white; border: none; border-radius: 4px; cursor: pointer;">Add Stat</button>
-                </div>
-                <div id="schedule-tab" class="tab-pane">
-                    <div id="sections-editor">
-                        <!-- Sections will be populated here -->
-                    </div>
-                    <button id="add-section" style="margin-top: 1rem; padding: 0.5rem 1rem; background: #28a745; color: white; border: none; border-radius: 4px; cursor: pointer;">Add Section</button>
-                </div>
-                <div id="nutrition-tab" class="tab-pane">
-                    <div class="form-group" style="margin-bottom: 1rem;">
-                        <label>Title:</label>
-                        <input type="text" id="nutrition-title" style="width: 100%; padding: 0.5rem; border: 1px solid var(--color-border-primary); border-radius: 4px;">
-                    </div>
-                    <div id="meals-editor">
-                        <!-- Meals will be populated here -->
-                    </div>
-                    <button id="add-meal" style="margin-top: 1rem; padding: 0.5rem 1rem; background: #28a745; color: white; border: none; border-radius: 4px; cursor: pointer;">Add Meal</button>
-                    <div class="form-group" style="margin-bottom: 1rem; margin-top: 1rem;">
-                        <label>Total:</label>
-                        <input type="text" id="nutrition-total" style="width: 100%; padding: 0.5rem; border: 1px solid var(--color-border-primary); border-radius: 4px;">
-                    </div>
-                    <div class="form-group" style="margin-bottom: 1rem;">
-                        <label>Description:</label>
-                        <textarea id="nutrition-description" rows="3" style="width: 100%; padding: 0.5rem; border: 1px solid var(--color-border-primary); border-radius: 4px;"></textarea>
-                    </div>
-                </div>
-                <div id="checklist-tab" class="tab-pane">
-                    <div class="form-group" style="margin-bottom: 1rem;">
-                        <label>Title:</label>
-                        <input type="text" id="checklist-title" style="width: 100%; padding: 0.5rem; border: 1px solid var(--color-border-primary); border-radius: 4px;">
-                    </div>
-                    <div id="items-editor">
-                        <!-- Items will be populated here -->
-                    </div>
-                    <button id="add-item" style="margin-top: 1rem; padding: 0.5rem 1rem; background: #28a745; color: white; border: none; border-radius: 4px; cursor: pointer;">Add Item</button>
                 </div>
             </div>
         </div>
-        <div class="modal-footer" style="padding: 1rem; border-top: 1px solid var(--color-border-primary); display: flex; justify-content: flex-end; gap: 0.5rem;">
-            <button id="save-settings" style="padding: 0.5rem 1rem; background: #007acc; color: white; border: none; border-radius: 4px; cursor: pointer;">Save Changes</button>
-            <button id="reset-settings" style="padding: 0.5rem 1rem; background: #dc3545; color: white; border: none; border-radius: 4px; cursor: pointer;">Reset to Default</button>
+        <div class="modal-footer" style="padding: 1.5rem 2rem; border-top: 1px solid var(--color-border-primary); display: flex; justify-content: space-between; align-items: center; background: var(--color-background-secondary);">
+            <div style="font-size: 13px; color: var(--color-text-secondary);">
+                💾 Changes are saved to browser memory
+            </div>
+            <div style="display: flex; gap: 0.75rem;">
+                <button id="reset-settings" style="padding: 0.75rem 1.5rem; background: #dc3545; color: white; border: none; border-radius: var(--border-radius-md); cursor: pointer; font-weight: 500; transition: transform 0.2s;">Reset</button>
+                <button id="save-settings" style="padding: 0.75rem 1.5rem; background: linear-gradient(135deg, #007acc 0%, #0056b3 100%); color: white; border: none; border-radius: var(--border-radius-md); cursor: pointer; font-weight: 500; transition: transform 0.2s; box-shadow: 0 2px 8px rgba(0, 122, 204, 0.3);">Save Changes</button>
+            </div>
         </div>
     </div>
 </div>
@@ -282,6 +311,15 @@ function collectModalData() {
     return config;
 }
 
+// Attach hamburger menu behavior early
+const menuToggle = document.getElementById('menu-toggle');
+const siteNav = document.querySelector('.site-nav');
+if (menuToggle && siteNav) {
+    menuToggle.addEventListener('click', () => {
+        siteNav.classList.toggle('open');
+    });
+}
+
 (async () => {
     currentScheduleConfig = await loadTrackerConfig('schedule-config.json');
     if (currentScheduleConfig) {
@@ -291,17 +329,9 @@ function collectModalData() {
 
     // Modal functionality
     const modal = document.getElementById('settings-modal');
-    const settingsBtn = document.getElementById('settings-btn');
     const closeBtn = document.getElementById('close-modal');
     const saveBtn = document.getElementById('save-settings');
     const resetBtn = document.getElementById('reset-settings');
-
-    settingsBtn.addEventListener('click', () => {
-        if (currentScheduleConfig) {
-            populateModal(currentScheduleConfig);
-        }
-        modal.style.display = 'block';
-    });
 
     closeBtn.addEventListener('click', () => {
         modal.style.display = 'none';
@@ -337,6 +367,23 @@ function collectModalData() {
             btn.classList.add('active');
             document.getElementById(btn.dataset.tab + '-tab').classList.add('active');
         });
+    });
+
+    document.getElementById('settings-nav-link').addEventListener('click', (event) => {
+        event.preventDefault();
+        if (currentScheduleConfig) {
+            populateModal(currentScheduleConfig);
+        }
+        siteNav.classList.remove('open');
+        modal.style.display = 'block';
+    });
+
+    document.querySelectorAll('.site-nav a').forEach(link => {
+        if (link.id !== 'settings-nav-link') {
+            link.addEventListener('click', () => {
+                siteNav.classList.remove('open');
+            });
+        }
     });
 
     // Add/Remove handlers
@@ -479,7 +526,5 @@ function collectModalData() {
     });
 })();
 </script>
-
-<script src="script.js"></script>
 </body>
 </html>
