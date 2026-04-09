@@ -39,8 +39,8 @@ function updateSchedule() {
     // Find and highlight current activity
     let found = false;
     document.querySelectorAll('.schedule-item').forEach(item => {
-        const start = parseInt(item.getAttribute('data-start'));
-        const end = parseInt(item.getAttribute('data-end'));
+        const start = timeToMinutes(item.getAttribute('data-start'));
+        const end = timeToMinutes(item.getAttribute('data-end'));
         
         if (currentMinutes >= start && currentMinutes < end) {
             item.classList.add('current');
