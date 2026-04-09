@@ -1,0 +1,95 @@
+{
+  "title": "My Daily Schedule",
+  "subtitle": "Customize this to fit your lifestyle",
+  "stats": [
+    {"label": "Wake-up time", "value": "6:00 AM"},
+    {"label": "Bedtime", "value": "10:00 PM"},
+    {"label": "Sleep", "value": "8 hours"},
+    {"label": "Active hours", "value": "16 hours"}
+  ],
+  "sections": [
+    {
+      "title": "Morning Routine",
+      "items": [
+        {
+          "time": "6:00–6:30 AM (30 mins)",
+          "title": "Wake up & Morning routine",
+          "description": "Start your day with hydration, light exercise, or meditation.",
+          "start": "600",
+          "end": "630",
+          "color": "#378ADD"
+        },
+        {
+          "time": "6:30–7:30 AM (1 hour)",
+          "title": "Breakfast & Planning",
+          "description": "Healthy breakfast and review your goals for the day.",
+          "start": "630",
+          "end": "730",
+          "color": "#54A94D"
+        }
+      ]
+    },
+    {
+      "title": "Work/Productivity Block",
+      "items": [
+        {
+          "time": "8:00 AM–12:00 PM (4 hours)",
+          "title": "Deep work session",
+          "description": "Focus on your most important tasks without distractions.",
+          "start": "800",
+          "end": "1200",
+          "color": "#BA7517"
+        },
+        {
+          "time": "12:00–1:00 PM (1 hour)",
+          "title": "Lunch break",
+          "description": "Take a proper break to eat and recharge.",
+          "start": "1200",
+          "end": "1300",
+          "color": "#888780"
+        }
+      ]
+    },
+    {
+      "title": "Evening Wind-down",
+      "items": [
+        {
+          "time": "6:00–7:00 PM (1 hour)",
+          "title": "Exercise or hobby",
+          "description": "Physical activity or pursue a personal interest.",
+          "start": "1800",
+          "end": "1900",
+          "color": "#D4537E"
+        },
+        {
+          "time": "9:00–10:00 PM (1 hour)",
+          "title": "Relax & prepare for bed",
+          "description": "Unwind, read, or do light stretching before sleep.",
+          "start": "2100",
+          "end": "2200",
+          "color": "#888780"
+        }
+      ]
+    }
+  ],
+  "nutrition": {
+    "title": "Daily Nutrition",
+    "meals": [
+      {"meal": "Breakfast", "calories": "400 cal"},
+      {"meal": "Lunch", "calories": "500 cal"},
+      {"meal": "Dinner", "calories": "500 cal"}
+    ],
+    "total": "~1,400 cal",
+    "description": "Focus on balanced meals with protein, vegetables, and whole grains. Adjust calories based on your goals."
+  },
+  "checklist": {
+    "title": "Daily Checklist",
+    "items": [
+      "Drink 8 glasses of water",
+      "Take a 10-minute walk",
+      "Read for 20 minutes",
+      "Plan tomorrow's priorities",
+      "Get 7-8 hours of sleep"
+    ]
+  }
+}

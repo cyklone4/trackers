@@ -31,9 +31,86 @@
 <p style="font-size: 14px; color: var(--color-text-secondary); margin-bottom: 2rem;">Fat loss journey • Family time • Learning • Freelancing</p>
 
 <div class="config-controls" style="margin-bottom: 1rem;">
+    <button id="settings-btn">Settings</button>
+    <button id="download-template">Download Template</button>
     <button id="export-schedule-config">Export Config</button>
     <input type="file" id="import-schedule-config" accept=".json" style="display: none;">
     <label for="import-schedule-config" style="cursor: pointer; padding: 0.5rem 1rem; background: #007acc; color: white; border-radius: 4px;">Import Config</label>
+</div>
+
+<!-- Settings Modal -->
+<div id="settings-modal" class="modal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 1000;">
+    <div class="modal-content" style="background: var(--color-background-primary); margin: 5% auto; padding: 0; width: 90%; max-width: 800px; border-radius: var(--border-radius-lg); max-height: 80%; overflow: hidden;">
+        <div class="modal-header" style="padding: 1rem; border-bottom: 1px solid var(--color-border-primary); display: flex; justify-content: space-between; align-items: center;">
+            <h3 style="margin: 0; font-size: 18px;">Schedule Settings</h3>
+            <button id="close-modal" style="background: none; border: none; font-size: 24px; cursor: pointer; color: var(--color-text-secondary);">&times;</button>
+        </div>
+        <div class="modal-body" style="padding: 1rem; max-height: 60vh; overflow-y: auto;">
+            <div class="tabs" style="display: flex; border-bottom: 1px solid var(--color-border-primary); margin-bottom: 1rem;">
+                <button class="tab-btn active" data-tab="general">General</button>
+                <button class="tab-btn" data-tab="stats">Stats</button>
+                <button class="tab-btn" data-tab="schedule">Schedule</button>
+                <button class="tab-btn" data-tab="nutrition">Nutrition</button>
+                <button class="tab-btn" data-tab="checklist">Checklist</button>
+            </div>
+            <div class="tab-content">
+                <div id="general-tab" class="tab-pane active">
+                    <div class="form-group" style="margin-bottom: 1rem;">
+                        <label>Title:</label>
+                        <input type="text" id="config-title" style="width: 100%; padding: 0.5rem; border: 1px solid var(--color-border-primary); border-radius: 4px;">
+                    </div>
+                    <div class="form-group" style="margin-bottom: 1rem;">
+                        <label>Subtitle:</label>
+                        <input type="text" id="config-subtitle" style="width: 100%; padding: 0.5rem; border: 1px solid var(--color-border-primary); border-radius: 4px;">
+                    </div>
+                </div>
+                <div id="stats-tab" class="tab-pane">
+                    <div id="stats-editor">
+                        <!-- Stats will be populated here -->
+                    </div>
+                    <button id="add-stat" style="margin-top: 1rem; padding: 0.5rem 1rem; background: #28a745; color: white; border: none; border-radius: 4px; cursor: pointer;">Add Stat</button>
+                </div>
+                <div id="schedule-tab" class="tab-pane">
+                    <div id="sections-editor">
+                        <!-- Sections will be populated here -->
+                    </div>
+                    <button id="add-section" style="margin-top: 1rem; padding: 0.5rem 1rem; background: #28a745; color: white; border: none; border-radius: 4px; cursor: pointer;">Add Section</button>
+                </div>
+                <div id="nutrition-tab" class="tab-pane">
+                    <div class="form-group" style="margin-bottom: 1rem;">
+                        <label>Title:</label>
+                        <input type="text" id="nutrition-title" style="width: 100%; padding: 0.5rem; border: 1px solid var(--color-border-primary); border-radius: 4px;">
+                    </div>
+                    <div id="meals-editor">
+                        <!-- Meals will be populated here -->
+                    </div>
+                    <button id="add-meal" style="margin-top: 1rem; padding: 0.5rem 1rem; background: #28a745; color: white; border: none; border-radius: 4px; cursor: pointer;">Add Meal</button>
+                    <div class="form-group" style="margin-bottom: 1rem; margin-top: 1rem;">
+                        <label>Total:</label>
+                        <input type="text" id="nutrition-total" style="width: 100%; padding: 0.5rem; border: 1px solid var(--color-border-primary); border-radius: 4px;">
+                    </div>
+                    <div class="form-group" style="margin-bottom: 1rem;">
+                        <label>Description:</label>
+                        <textarea id="nutrition-description" rows="3" style="width: 100%; padding: 0.5rem; border: 1px solid var(--color-border-primary); border-radius: 4px;"></textarea>
+                    </div>
+                </div>
+                <div id="checklist-tab" class="tab-pane">
+                    <div class="form-group" style="margin-bottom: 1rem;">
+                        <label>Title:</label>
+                        <input type="text" id="checklist-title" style="width: 100%; padding: 0.5rem; border: 1px solid var(--color-border-primary); border-radius: 4px;">
+                    </div>
+                    <div id="items-editor">
+                        <!-- Items will be populated here -->
+                    </div>
+                    <button id="add-item" style="margin-top: 1rem; padding: 0.5rem 1rem; background: #28a745; color: white; border: none; border-radius: 4px; cursor: pointer;">Add Item</button>
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer" style="padding: 1rem; border-top: 1px solid var(--color-border-primary); display: flex; justify-content: flex-end; gap: 0.5rem;">
+            <button id="save-settings" style="padding: 0.5rem 1rem; background: #007acc; color: white; border: none; border-radius: 4px; cursor: pointer;">Save Changes</button>
+            <button id="reset-settings" style="padding: 0.5rem 1rem; background: #dc3545; color: white; border: none; border-radius: 4px; cursor: pointer;">Reset to Default</button>
+        </div>
+    </div>
 </div>
 
 <!-- Content will be generated dynamically -->
@@ -45,12 +122,322 @@
 <script>
 let currentScheduleConfig = null;
 
+function populateModal(config) {
+    // General tab
+    document.getElementById('config-title').value = config.title || '';
+    document.getElementById('config-subtitle').value = config.subtitle || '';
+
+    // Stats tab
+    const statsEditor = document.getElementById('stats-editor');
+    statsEditor.innerHTML = '';
+    (config.stats || []).forEach((stat, index) => {
+        const statDiv = document.createElement('div');
+        statDiv.className = 'stat-item';
+        statDiv.style.cssText = 'display: flex; gap: 0.5rem; margin-bottom: 0.5rem; align-items: center;';
+        statDiv.innerHTML = `
+            <input type="text" placeholder="Label" value="${stat.label || ''}" style="flex: 1; padding: 0.5rem; border: 1px solid var(--color-border-primary); border-radius: 4px;">
+            <input type="text" placeholder="Value" value="${stat.value || ''}" style="flex: 1; padding: 0.5rem; border: 1px solid var(--color-border-primary); border-radius: 4px;">
+            <button class="remove-stat" data-index="${index}" style="padding: 0.5rem; background: #dc3545; color: white; border: none; border-radius: 4px; cursor: pointer;">Remove</button>
+        `;
+        statsEditor.appendChild(statDiv);
+    });
+
+    // Schedule tab
+    const sectionsEditor = document.getElementById('sections-editor');
+    sectionsEditor.innerHTML = '';
+    (config.sections || []).forEach((section, sectionIndex) => {
+        const sectionDiv = document.createElement('div');
+        sectionDiv.className = 'section-item';
+        sectionDiv.style.cssText = 'border: 1px solid var(--color-border-primary); border-radius: 4px; padding: 1rem; margin-bottom: 1rem;';
+        sectionDiv.innerHTML = `
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+                <input type="text" placeholder="Section Title" value="${section.title || ''}" style="flex: 1; padding: 0.5rem; border: 1px solid var(--color-border-primary); border-radius: 4px;">
+                <button class="remove-section" data-index="${sectionIndex}" style="margin-left: 0.5rem; padding: 0.5rem; background: #dc3545; color: white; border: none; border-radius: 4px; cursor: pointer;">Remove Section</button>
+            </div>
+            <div class="items-container">
+                ${(section.items || []).map((item, itemIndex) => `
+                    <div class="item-item" style="border: 1px solid var(--color-border-secondary); border-radius: 4px; padding: 0.5rem; margin-bottom: 0.5rem;">
+                        <div style="display: grid; grid-template-columns: 1fr 1fr 1fr auto; gap: 0.5rem; margin-bottom: 0.5rem;">
+                            <input type="text" placeholder="Time" value="${item.time || ''}" style="padding: 0.5rem; border: 1px solid var(--color-border-primary); border-radius: 4px;">
+                            <input type="text" placeholder="Title" value="${item.title || ''}" style="padding: 0.5rem; border: 1px solid var(--color-border-primary); border-radius: 4px;">
+                            <input type="text" placeholder="Start (HHMM)" value="${item.start || ''}" style="padding: 0.5rem; border: 1px solid var(--color-border-primary); border-radius: 4px;">
+                            <button class="remove-item" data-section="${sectionIndex}" data-item="${itemIndex}" style="padding: 0.5rem; background: #dc3545; color: white; border: none; border-radius: 4px; cursor: pointer;">Remove</button>
+                        </div>
+                        <textarea placeholder="Description" rows="2" style="width: 100%; padding: 0.5rem; border: 1px solid var(--color-border-primary); border-radius: 4px;">${item.description || ''}</textarea>
+                    </div>
+                `).join('')}
+            </div>
+            <button class="add-item-to-section" data-section="${sectionIndex}" style="margin-top: 0.5rem; padding: 0.5rem 1rem; background: #28a745; color: white; border: none; border-radius: 4px; cursor: pointer;">Add Item</button>
+        `;
+        sectionsEditor.appendChild(sectionDiv);
+    });
+
+    // Nutrition tab
+    document.getElementById('nutrition-title').value = config.nutrition?.title || '';
+    const mealsEditor = document.getElementById('meals-editor');
+    mealsEditor.innerHTML = '';
+    (config.nutrition?.meals || []).forEach((meal, index) => {
+        const mealDiv = document.createElement('div');
+        mealDiv.className = 'meal-item';
+        mealDiv.style.cssText = 'display: flex; gap: 0.5rem; margin-bottom: 0.5rem; align-items: center;';
+        mealDiv.innerHTML = `
+            <input type="text" placeholder="Meal" value="${meal.meal || ''}" style="flex: 1; padding: 0.5rem; border: 1px solid var(--color-border-primary); border-radius: 4px;">
+            <input type="text" placeholder="Calories" value="${meal.calories || ''}" style="flex: 1; padding: 0.5rem; border: 1px solid var(--color-border-primary); border-radius: 4px;">
+            <button class="remove-meal" data-index="${index}" style="padding: 0.5rem; background: #dc3545; color: white; border: none; border-radius: 4px; cursor: pointer;">Remove</button>
+        `;
+        mealsEditor.appendChild(mealDiv);
+    });
+    document.getElementById('nutrition-total').value = config.nutrition?.total || '';
+    document.getElementById('nutrition-description').value = config.nutrition?.description || '';
+
+    // Checklist tab
+    document.getElementById('checklist-title').value = config.checklist?.title || '';
+    const itemsEditor = document.getElementById('items-editor');
+    itemsEditor.innerHTML = '';
+    (config.checklist?.items || []).forEach((item, index) => {
+        const itemDiv = document.createElement('div');
+        itemDiv.className = 'checklist-item';
+        itemDiv.style.cssText = 'display: flex; gap: 0.5rem; margin-bottom: 0.5rem; align-items: center;';
+        itemDiv.innerHTML = `
+            <input type="text" placeholder="Item" value="${item || ''}" style="flex: 1; padding: 0.5rem; border: 1px solid var(--color-border-primary); border-radius: 4px;">
+            <button class="remove-checklist-item" data-index="${index}" style="padding: 0.5rem; background: #dc3545; color: white; border: none; border-radius: 4px; cursor: pointer;">Remove</button>
+        `;
+        itemsEditor.appendChild(itemDiv);
+    });
+}
+
+function collectModalData() {
+    const config = {
+        title: document.getElementById('config-title').value,
+        subtitle: document.getElementById('config-subtitle').value,
+        stats: [],
+        sections: [],
+        nutrition: {
+            title: document.getElementById('nutrition-title').value,
+            meals: [],
+            total: document.getElementById('nutrition-total').value,
+            description: document.getElementById('nutrition-description').value
+        },
+        checklist: {
+            title: document.getElementById('checklist-title').value,
+            items: []
+        }
+    };
+
+    // Collect stats
+    document.querySelectorAll('#stats-editor .stat-item').forEach(item => {
+        const inputs = item.querySelectorAll('input');
+        if (inputs[0].value || inputs[1].value) {
+            config.stats.push({
+                label: inputs[0].value,
+                value: inputs[1].value
+            });
+        }
+    });
+
+    // Collect sections
+    document.querySelectorAll('#sections-editor .section-item').forEach(sectionDiv => {
+        const titleInput = sectionDiv.querySelector('input[placeholder="Section Title"]');
+        const items = [];
+        sectionDiv.querySelectorAll('.item-item').forEach(itemDiv => {
+            const inputs = itemDiv.querySelectorAll('input');
+            const textarea = itemDiv.querySelector('textarea');
+            if (inputs[0].value || inputs[1].value) {
+                items.push({
+                    time: inputs[0].value,
+                    title: inputs[1].value,
+                    start: inputs[2].value,
+                    end: '', // We'll need to calculate or leave empty
+                    description: textarea.value,
+                    color: '#378ADD' // Default color
+                });
+            }
+        });
+        if (titleInput.value || items.length > 0) {
+            config.sections.push({
+                title: titleInput.value,
+                items: items
+            });
+        }
+    });
+
+    // Collect meals
+    document.querySelectorAll('#meals-editor .meal-item').forEach(item => {
+        const inputs = item.querySelectorAll('input');
+        if (inputs[0].value || inputs[1].value) {
+            config.nutrition.meals.push({
+                meal: inputs[0].value,
+                calories: inputs[1].value
+            });
+        }
+    });
+
+    // Collect checklist items
+    document.querySelectorAll('#items-editor .checklist-item input').forEach(input => {
+        if (input.value) {
+            config.checklist.items.push(input.value);
+        }
+    });
+
+    return config;
+}
+
 (async () => {
     currentScheduleConfig = await loadTrackerConfig('schedule-config.json');
     if (currentScheduleConfig) {
         generateSchedulePage(currentScheduleConfig);
-        updateSchedule(); // Update schedule highlighting after generating the page
+        updateSchedule();
     }
+
+    // Modal functionality
+    const modal = document.getElementById('settings-modal');
+    const settingsBtn = document.getElementById('settings-btn');
+    const closeBtn = document.getElementById('close-modal');
+    const saveBtn = document.getElementById('save-settings');
+    const resetBtn = document.getElementById('reset-settings');
+
+    settingsBtn.addEventListener('click', () => {
+        if (currentScheduleConfig) {
+            populateModal(currentScheduleConfig);
+        }
+        modal.style.display = 'block';
+    });
+
+    closeBtn.addEventListener('click', () => {
+        modal.style.display = 'none';
+    });
+
+    window.addEventListener('click', (event) => {
+        if (event.target === modal) {
+            modal.style.display = 'none';
+        }
+    });
+
+    // Download template
+    document.getElementById('download-template').addEventListener('click', async () => {
+        try {
+            const response = await fetch('schedule-template.json');
+            const template = await response.json();
+            const dataStr = JSON.stringify(template, null, 2);
+            const dataUri = 'data:application/json;charset=utf-8,'+ encodeURIComponent(dataStr);
+            const linkElement = document.createElement('a');
+            linkElement.setAttribute('href', dataUri);
+            linkElement.setAttribute('download', 'schedule-template.json');
+            linkElement.click();
+        } catch (error) {
+            alert('Failed to load template');
+        }
+    });
+
+    // Tab switching
+    document.querySelectorAll('.tab-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+            document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+            document.querySelectorAll('.tab-pane').forEach(p => p.classList.remove('active'));
+            btn.classList.add('active');
+            document.getElementById(btn.dataset.tab + '-tab').classList.add('active');
+        });
+    });
+
+    // Add/Remove handlers
+    document.addEventListener('click', (event) => {
+        if (event.target.id === 'add-stat') {
+            const statsEditor = document.getElementById('stats-editor');
+            const statDiv = document.createElement('div');
+            statDiv.className = 'stat-item';
+            statDiv.style.cssText = 'display: flex; gap: 0.5rem; margin-bottom: 0.5rem; align-items: center;';
+            statDiv.innerHTML = `
+                <input type="text" placeholder="Label" style="flex: 1; padding: 0.5rem; border: 1px solid var(--color-border-primary); border-radius: 4px;">
+                <input type="text" placeholder="Value" style="flex: 1; padding: 0.5rem; border: 1px solid var(--color-border-primary); border-radius: 4px;">
+                <button class="remove-stat" style="padding: 0.5rem; background: #dc3545; color: white; border: none; border-radius: 4px; cursor: pointer;">Remove</button>
+            `;
+            statsEditor.appendChild(statDiv);
+        } else if (event.target.classList.contains('remove-stat')) {
+            event.target.closest('.stat-item').remove();
+        } else if (event.target.id === 'add-section') {
+            const sectionsEditor = document.getElementById('sections-editor');
+            const sectionDiv = document.createElement('div');
+            sectionDiv.className = 'section-item';
+            sectionDiv.style.cssText = 'border: 1px solid var(--color-border-primary); border-radius: 4px; padding: 1rem; margin-bottom: 1rem;';
+            sectionDiv.innerHTML = `
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+                    <input type="text" placeholder="Section Title" style="flex: 1; padding: 0.5rem; border: 1px solid var(--color-border-primary); border-radius: 4px;">
+                    <button class="remove-section" style="margin-left: 0.5rem; padding: 0.5rem; background: #dc3545; color: white; border: none; border-radius: 4px; cursor: pointer;">Remove Section</button>
+                </div>
+                <div class="items-container"></div>
+                <button class="add-item-to-section" style="margin-top: 0.5rem; padding: 0.5rem 1rem; background: #28a745; color: white; border: none; border-radius: 4px; cursor: pointer;">Add Item</button>
+            `;
+            sectionsEditor.appendChild(sectionDiv);
+        } else if (event.target.classList.contains('remove-section')) {
+            event.target.closest('.section-item').remove();
+        } else if (event.target.classList.contains('add-item-to-section')) {
+            const sectionDiv = event.target.closest('.section-item');
+            const itemsContainer = sectionDiv.querySelector('.items-container');
+            const itemDiv = document.createElement('div');
+            itemDiv.className = 'item-item';
+            itemDiv.style.cssText = 'border: 1px solid var(--color-border-secondary); border-radius: 4px; padding: 0.5rem; margin-bottom: 0.5rem;';
+            itemDiv.innerHTML = `
+                <div style="display: grid; grid-template-columns: 1fr 1fr 1fr auto; gap: 0.5rem; margin-bottom: 0.5rem;">
+                    <input type="text" placeholder="Time" style="padding: 0.5rem; border: 1px solid var(--color-border-primary); border-radius: 4px;">
+                    <input type="text" placeholder="Title" style="padding: 0.5rem; border: 1px solid var(--color-border-primary); border-radius: 4px;">
+                    <input type="text" placeholder="Start (HHMM)" style="padding: 0.5rem; border: 1px solid var(--color-border-primary); border-radius: 4px;">
+                    <button class="remove-item" style="padding: 0.5rem; background: #dc3545; color: white; border: none; border-radius: 4px; cursor: pointer;">Remove</button>
+                </div>
+                <textarea placeholder="Description" rows="2" style="width: 100%; padding: 0.5rem; border: 1px solid var(--color-border-primary); border-radius: 4px;"></textarea>
+            `;
+            itemsContainer.appendChild(itemDiv);
+        } else if (event.target.classList.contains('remove-item')) {
+            event.target.closest('.item-item').remove();
+        } else if (event.target.id === 'add-meal') {
+            const mealsEditor = document.getElementById('meals-editor');
+            const mealDiv = document.createElement('div');
+            mealDiv.className = 'meal-item';
+            mealDiv.style.cssText = 'display: flex; gap: 0.5rem; margin-bottom: 0.5rem; align-items: center;';
+            mealDiv.innerHTML = `
+                <input type="text" placeholder="Meal" style="flex: 1; padding: 0.5rem; border: 1px solid var(--color-border-primary); border-radius: 4px;">
+                <input type="text" placeholder="Calories" style="flex: 1; padding: 0.5rem; border: 1px solid var(--color-border-primary); border-radius: 4px;">
+                <button class="remove-meal" style="padding: 0.5rem; background: #dc3545; color: white; border: none; border-radius: 4px; cursor: pointer;">Remove</button>
+            `;
+            mealsEditor.appendChild(mealDiv);
+        } else if (event.target.classList.contains('remove-meal')) {
+            event.target.closest('.meal-item').remove();
+        } else if (event.target.id === 'add-item') {
+            const itemsEditor = document.getElementById('items-editor');
+            const itemDiv = document.createElement('div');
+            itemDiv.className = 'checklist-item';
+            itemDiv.style.cssText = 'display: flex; gap: 0.5rem; margin-bottom: 0.5rem; align-items: center;';
+            itemDiv.innerHTML = `
+                <input type="text" placeholder="Item" style="flex: 1; padding: 0.5rem; border: 1px solid var(--color-border-primary); border-radius: 4px;">
+                <button class="remove-checklist-item" style="padding: 0.5rem; background: #dc3545; color: white; border: none; border-radius: 4px; cursor: pointer;">Remove</button>
+            `;
+            itemsEditor.appendChild(itemDiv);
+        } else if (event.target.classList.contains('remove-checklist-item')) {
+            event.target.closest('.checklist-item').remove();
+        }
+    });
+
+    saveBtn.addEventListener('click', () => {
+        const newConfig = collectModalData();
+        currentScheduleConfig = newConfig;
+        // Regenerate the page
+        const pageContent = document.querySelector('.page-content');
+        const h2 = pageContent.querySelector('h2');
+        const p = pageContent.querySelector('p');
+        const controls = pageContent.querySelector('.config-controls');
+        pageContent.innerHTML = '';
+        pageContent.appendChild(h2);
+        pageContent.appendChild(p);
+        pageContent.appendChild(controls);
+        generateSchedulePage(currentScheduleConfig);
+        updateSchedule();
+        modal.style.display = 'none';
+    });
+
+    resetBtn.addEventListener('click', () => {
+        if (confirm('Are you sure you want to reset to default? This will reload the original config.')) {
+            location.reload();
+        }
+    });
 
     // Export config
     document.getElementById('export-schedule-config').addEventListener('click', () => {
@@ -83,7 +470,7 @@ let currentScheduleConfig = null;
                 pageContent.appendChild(p);
                 pageContent.appendChild(controls);
                 generateSchedulePage(currentScheduleConfig);
-                updateSchedule(); // Update after regenerating
+                updateSchedule();
             } catch (error) {
                 alert('Invalid JSON file');
             }
