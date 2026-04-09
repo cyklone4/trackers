@@ -1,0 +1,18 @@
+{
+  "title": "Fat Loss Tracking — Weekly weigh-ins",
+  "intro": [
+    "Weight change tracking, gym sessions, calorie averages, dandruff check column. 13 weekly checkpoints.",
+    "Track your weekly Sunday weigh-ins and fat loss metrics over 13 checkpoints."
+  ],
+  "columns": [
+    {"name": "Week", "editable": false},
+    {"name": "Sunday weight", "editable": true},
+    {"name": "Weight change", "editable": true},
+    {"name": "Gym sessions", "editable": true},
+    {"name": "Avg calories", "editable": true},
+    {"name": "Dandruff check", "editable": true},
+    {"name": "Notes", "editable": true}
+  ],
+  "rowCount": 13,
+  "rowPrefix": "Week"
+}

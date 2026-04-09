@@ -82,6 +82,175 @@ function getStorageKey() {
     return `tracker-memory:${window.location.pathname}`;
 }
 
+async function loadTrackerConfig(configUrl) {
+    try {
+        const response = await fetch(configUrl);
+        return await response.json();
+    } catch (error) {
+        console.error('Failed to load tracker config:', error);
+        return null;
+    }
+}
+
+function generateTrackerTable(config) {
+    const pageContent = document.querySelector('.page-content');
+    if (!pageContent) return;
+
+    // Set title
+    const h1 = pageContent.querySelector('h1');
+    if (h1) h1.textContent = config.title;
+
+    // Set intro
+    const intros = pageContent.querySelectorAll('.page-intro');
+    config.intro.forEach((text, index) => {
+        if (intros[index]) intros[index].textContent = text;
+    });
+
+    // Generate table
+    let table = pageContent.querySelector('.tracker-table');
+    if (!table) {
+        table = document.createElement('table');
+        table.className = 'tracker-table';
+        pageContent.appendChild(table);
+    }
+    table.innerHTML = '';
+
+    // Caption
+    const caption = document.createElement('caption');
+    caption.textContent = config.title;
+    table.appendChild(caption);
+
+    // Header
+    const thead = document.createElement('thead');
+    const headerRow = document.createElement('tr');
+    config.columns.forEach(col => {
+        const th = document.createElement('th');
+        th.textContent = col.name;
+        headerRow.appendChild(th);
+    });
+    thead.appendChild(headerRow);
+    table.appendChild(thead);
+
+    // Body
+    const tbody = document.createElement('tbody');
+    for (let i = 1; i <= config.rowCount; i++) {
+        const row = document.createElement('tr');
+        config.columns.forEach((col, colIndex) => {
+            const cell = document.createElement('td');
+            if (colIndex === 0) {
+                cell.textContent = `${config.rowPrefix} ${i}`;
+            } else {
+                cell.textContent = '';
+                if (col.editable) {
+                    cell.contentEditable = 'true';
+                    cell.dataset.editable = 'true';
+                }
+            }
+            row.appendChild(cell);
+        });
+        tbody.appendChild(row);
+    }
+    table.appendChild(tbody);
+}
+
+function generateSchedulePage(config) {
+    const pageContent = document.querySelector('.page-content');
+    if (!pageContent) return;
+
+    // Set title
+    const h2 = pageContent.querySelector('h2');
+    if (h2) h2.textContent = config.title;
+
+    // Set subtitle
+    const p = pageContent.querySelector('p');
+    if (p) p.textContent = config.subtitle;
+
+    // Generate stats grid
+    const statsContainer = document.createElement('div');
+    statsContainer.style.cssText = 'display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 12px; margin-bottom: 2rem;';
+    config.stats.forEach(stat => {
+        const div = document.createElement('div');
+        div.style.cssText = 'background: var(--color-background-secondary); border-radius: var(--border-radius-md); padding: 1rem;';
+        div.innerHTML = `
+            <div style="font-size: 13px; color: var(--color-text-secondary); margin-bottom: 0.5rem;">${stat.label}</div>
+            <div style="font-size: 22px; font-weight: 500;">${stat.value}</div>
+        `;
+        statsContainer.appendChild(div);
+    });
+    pageContent.appendChild(statsContainer);
+
+    // Generate sections
+    config.sections.forEach(section => {
+        const sectionDiv = document.createElement('div');
+        sectionDiv.style.cssText = 'margin-bottom: 2rem;';
+        sectionDiv.innerHTML = `<h3 style="font-size: 16px; font-weight: 500; margin-bottom: 1rem;">${section.title}</h3>`;
+
+        section.items.forEach(item => {
+            const itemDiv = document.createElement('div');
+            itemDiv.className = 'schedule-item';
+            itemDiv.setAttribute('data-start', item.start);
+            itemDiv.setAttribute('data-end', item.end);
+            itemDiv.style.cssText = `background: var(--color-background-primary); border-left: 4px solid ${item.color}; border-radius: var(--border-radius-lg); border-top-left-radius: 0; border-bottom-left-radius: 0; padding: 1rem 1.25rem; margin-bottom: 0.75rem;`;
+            itemDiv.innerHTML = `
+                <div style="font-size: 13px; color: var(--color-text-secondary); font-weight: 500; margin-bottom: 0.5rem;">${item.time}</div>
+                <div style="font-size: 15px; font-weight: 500; margin-bottom: 0.5rem;">${item.title}</div>
+                <div style="font-size: 13px; color: var(--color-text-secondary); line-height: 1.6;">${item.description}</div>
+            `;
+            sectionDiv.appendChild(itemDiv);
+        });
+
+        pageContent.appendChild(sectionDiv);
+    });
+
+    // Generate nutrition
+    const nutritionDiv = document.createElement('div');
+    nutritionDiv.style.cssText = 'background: var(--color-background-secondary); border-radius: var(--border-radius-lg); padding: 1.25rem; margin-bottom: 2rem;';
+    nutritionDiv.innerHTML = `<h3 style="font-size: 16px; font-weight: 500; margin-bottom: 1rem;">${config.nutrition.title}</h3>`;
+    
+    const table = document.createElement('table');
+    table.style.cssText = 'width: 100%; font-size: 13px; border-collapse: collapse;';
+    config.nutrition.meals.forEach(meal => {
+        const tr = document.createElement('tr');
+        tr.style.cssText = 'border-bottom: 0.5px solid var(--color-border-tertiary);';
+        tr.innerHTML = `
+            <td style="padding: 8px 0; color: var(--color-text-secondary);">${meal.meal}</td>
+            <td style="text-align: right; padding: 8px 0;">${meal.calories}</td>
+        `;
+        table.appendChild(tr);
+    });
+    const totalTr = document.createElement('tr');
+    totalTr.innerHTML = `
+        <td style="padding: 8px 0; font-weight: 500; color: var(--color-text-primary);">Total daily</td>
+        <td style="text-align: right; padding: 8px 0; font-weight: 500; color: var(--color-text-primary);">${config.nutrition.total}</td>
+    `;
+    table.appendChild(totalTr);
+    nutritionDiv.appendChild(table);
+    
+    const descP = document.createElement('p');
+    descP.style.cssText = 'font-size: 13px; color: var(--color-text-secondary); margin-top: 1rem; line-height: 1.6;';
+    descP.innerHTML = config.nutrition.description;
+    nutritionDiv.appendChild(descP);
+    
+    pageContent.appendChild(nutritionDiv);
+
+    // Generate checklist
+    const checklistDiv = document.createElement('div');
+    checklistDiv.style.cssText = 'background: var(--color-background-secondary); border-radius: var(--border-radius-lg); padding: 1.25rem;';
+    checklistDiv.innerHTML = `<h3 style="font-size: 16px; font-weight: 500; margin-bottom: 1rem;">${config.checklist.title}</h3>`;
+    
+    const listDiv = document.createElement('div');
+    listDiv.style.cssText = 'font-size: 13px; color: var(--color-text-secondary); line-height: 1.8;';
+    config.checklist.items.forEach(item => {
+        const itemDiv = document.createElement('div');
+        itemDiv.style.cssText = 'margin-bottom: 0.5rem;';
+        itemDiv.textContent = item;
+        listDiv.appendChild(itemDiv);
+    });
+    checklistDiv.appendChild(listDiv);
+    
+    pageContent.appendChild(checklistDiv);
+}
+
 function makeTableCellsEditable() {
     document.querySelectorAll('.tracker-table tr').forEach(row => {
         const cells = Array.from(row.children);

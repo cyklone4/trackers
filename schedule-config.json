@@ -1,0 +1,195 @@
+{
+  "title": "Your Complete Daily Schedule",
+  "subtitle": "Fat loss journey • Family time • Learning • Freelancing",
+  "stats": [
+    {"label": "Wake-up time", "value": "5:30 AM"},
+    {"label": "Bedtime", "value": "10:30 PM"},
+    {"label": "Sleep", "value": "7 hours"},
+    {"label": "Active hours", "value": "17 hours"}
+  ],
+  "sections": [
+    {
+      "title": "Morning routine (5:30–8:30 AM)",
+      "items": [
+        {
+          "time": "5:30–5:45 AM (15 mins)",
+          "title": "Wake up + hydration",
+          "description": "Drink 500ml water with lemon, splash cold water on face to activate metabolism. Take multivitamin + omega-3 supplement.",
+          "start": "530",
+          "end": "545",
+          "color": "#378ADD"
+        },
+        {
+          "time": "5:45–6:15 AM (30 mins)",
+          "title": "Scalp treatment + shower",
+          "description": "<strong>Dandruff routine:</strong> Apply ketoconazole/zinc pyrithione shampoo (2-3x weekly), or salicylic acid (on alternate days). Massage scalp 3–5 mins. Rinse with lukewarm water. Hot water worsens dandruff. Condition only tips. Pat dry with towel—avoid vigorous rubbing. Follow with light scalp moisturizer (coconut oil or tea tree, 1-2x weekly).",
+          "start": "545",
+          "end": "615",
+          "color": "#54A94D"
+        },
+        {
+          "time": "6:15–6:35 AM (20 mins)",
+          "title": "Reading + coffee",
+          "description": "Light reading (fiction, articles, or learning prep). Black coffee or green tea (0 cal, boosts metabolism). Sit by window if possible for natural light exposure.",
+          "start": "615",
+          "end": "635",
+          "color": "#D4537E"
+        },
+        {
+          "time": "6:35–7:35 AM (1 hour)",
+          "title": "Course 1 - structured learning",
+          "description": "Most cognitively demanding course. Your brain is sharpest now. Focus on concept videos, note-taking, problem-solving.",
+          "start": "635",
+          "end": "735",
+          "color": "#BA7517"
+        },
+        {
+          "time": "7:35–8:25 AM (50 mins)",
+          "title": "Breakfast + family time",
+          "description": "<strong>Breakfast (for fat loss):</strong> 2 scrambled eggs + whole wheat toast + veggies OR oatmeal + berries + almonds. 350–400 calories, high protein for satiety. Eat with wife & son before office. Quality family time—talk, laugh, no screens.",
+          "start": "735",
+          "end": "825",
+          "color": "#888780"
+        },
+        {
+          "time": "8:25–8:35 AM (10 mins)",
+          "title": "Prep + commute",
+          "description": "Get ready for office. Pack water bottle (aim for 3–4L throughout day for appetite suppression & metabolism).",
+          "start": "825",
+          "end": "835",
+          "color": "#888780"
+        }
+      ]
+    },
+    {
+      "title": "Office hours (8:35 AM–5:30 PM)",
+      "items": [
+        {
+          "time": "8:35 AM–12:30 PM (4 hours)",
+          "title": "Deep work block",
+          "description": "Focus on high-priority tasks. Drink water consistently. No snacking.",
+          "start": "835",
+          "end": "1230",
+          "color": "#378ADD"
+        },
+        {
+          "time": "12:30–1:30 PM (1 hour)",
+          "title": "Lunch break",
+          "description": "<strong>Lunch (for fat loss):</strong> Grilled chicken breast (150g) + brown rice (100g) + veggies (broccoli/spinach). ~450–500 cal, high protein. Slow eating, chew well. Walk 5–10 mins after to aid digestion & reduce blood sugar spike.",
+          "start": "1230",
+          "end": "1330",
+          "color": "#888780"
+        },
+        {
+          "time": "1:30–3:00 PM (1.5 hours)",
+          "title": "Meetings + secondary work",
+          "description": "Afternoon energy dip expected. Drink water, take short 2-min walks between meetings to stay alert.",
+          "start": "1330",
+          "end": "1500",
+          "color": "#378ADD"
+        },
+        {
+          "time": "3:00–4:00 PM (1 hour)",
+          "title": "Snack + work",
+          "description": "<strong>Snack:</strong> Protein shake (20g protein) with berries or Greek yogurt + almonds. ~150–180 cal. Prevents overeating at dinner, stabilizes energy.",
+          "start": "1500",
+          "end": "1600",
+          "color": "#888780"
+        },
+        {
+          "time": "4:00–5:30 PM (1.5 hours)",
+          "title": "Final push + wrap-up",
+          "description": "Close out tasks for the day. Prepare to-do list for next day to reduce mental load.",
+          "start": "1600",
+          "end": "1730",
+          "color": "#378ADD"
+        }
+      ]
+    },
+    {
+      "title": "Evening routine (5:30 PM–10:30 PM)",
+      "items": [
+        {
+          "time": "5:30–6:00 PM (30 mins)",
+          "title": "Pre-gym routine + hydration",
+          "description": "Change into gym clothes. Drink 400ml water + 1 banana (quick carbs for workout). Optional: 200mg caffeine (coffee/tea) 30 mins before gym for fat-burning boost.",
+          "start": "1730",
+          "end": "1800",
+          "color": "#54A94D"
+        },
+        {
+          "time": "6:00–7:15 PM (1 hour 15 mins)",
+          "title": "GYM (calorie deficit priority)",
+          "description": "<strong>Fat loss focused routine:</strong> 10 min warm-up (treadmill/rowing). 40 mins resistance training (compound lifts: squats, deadlifts, bench, rows—builds muscle preserves metabolism). 15 mins cardio (HIIT or steady state). This combo maximizes calorie burn + preserves lean mass. Drink water every 10–15 mins.",
+          "start": "1800",
+          "end": "1915",
+          "color": "#54A94D"
+        },
+        {
+          "time": "7:15–7:45 PM (30 mins)",
+          "title": "Post-gym cleanup + shower",
+          "description": "Shower immediately (sweat = scalp irritation risk for dandruff). Use same scalp routine if needed. Drink 500ml water to rehydrate. Change into comfy clothes.",
+          "start": "1915",
+          "end": "1945",
+          "color": "#54A94D"
+        },
+        {
+          "time": "7:45–8:30 PM (45 mins)",
+          "title": "Dinner + family time",
+          "description": "<strong>Dinner (for fat loss):</strong> Fish/lean turkey (150g) + sweet potato (100g) + salad. ~450 cal, high protein. Eat with wife & son. No screens during meal. Quality conversation = stress relief & better digestion.",
+          "start": "1945",
+          "end": "2030",
+          "color": "#888780"
+        },
+        {
+          "time": "8:30–9:30 PM (1 hour)",
+          "title": "Course 2 - hands-on practice",
+          "description": "Post-dinner energy boost. Focus on practical, project-based learning. Coding challenges, problem sets, etc.",
+          "start": "2030",
+          "end": "2130",
+          "color": "#BA7517"
+        },
+        {
+          "time": "9:30–10:00 PM (30 mins)",
+          "title": "Course 3 OR freelance work",
+          "description": "Rotate between third course and freelance projects depending on weekly focus. Light, lower-intensity learning.",
+          "start": "2130",
+          "end": "2200",
+          "color": "#0F6E56"
+        },
+        {
+          "time": "10:00–10:30 PM (30 mins)",
+          "title": "Wind down + sleep prep",
+          "description": "No screens after 10:00 PM (blue light kills melatonin). Read fiction, meditate, or journal. Dim lights. Set room temp to 16–18°C for better sleep (impacts metabolism recovery & fat loss). Lay out clothes for next day.",
+          "start": "2200",
+          "end": "2230",
+          "color": "#888780"
+        }
+      ]
+    }
+  ],
+  "nutrition": {
+    "title": "Daily nutrition (fat loss optimized)",
+    "meals": [
+      {"meal": "Breakfast (7:35 AM)", "calories": "350–400 cal"},
+      {"meal": "Lunch (12:30 PM)", "calories": "450–500 cal"},
+      {"meal": "Snack (3:00 PM)", "calories": "150–180 cal"},
+      {"meal": "Dinner (7:45 PM)", "calories": "450 cal"}
+    ],
+    "total": "~1,400–1,550 cal",
+    "description": "<strong>Macro targets:</strong> 120–130g protein daily (high satiety, muscle preservation), 130–150g carbs (mostly complex, timed around workouts), 40–50g fat (healthy sources). Drink 3–4L water daily. This creates a sustainable 300–500 cal deficit for steady fat loss."
+  },
+  "checklist": {
+    "title": "Weekly tracking checklist",
+    "items": [
+      "✓ Weight tracking (same time weekly—Sunday morning)",
+      "✓ Course progress (hours completed per course)",
+      "✓ Gym consistency (sessions completed)",
+      "✓ Dandruff check (scalp health, treatment frequency)",
+      "✓ Freelance work (hours billed/projects completed)",
+      "✓ Family time (quality conversations logged)",
+      "✓ Sleep consistency (avg hours, quality)",
+      "✓ Energy levels (rate 1–10 each day)"
+    ]
+  }
+}

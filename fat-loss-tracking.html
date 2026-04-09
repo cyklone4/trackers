@@ -29,25 +29,60 @@
 <h1 style="font-size: 26px; font-weight: 700; margin-bottom: 0.4rem;">Fat Loss Tracking — Weekly weigh-ins</h1>
 <p class="page-intro">Weight change tracking, gym sessions, calorie averages, dandruff check column. 13 weekly checkpoints.</p>
 <p class="page-intro">Track your weekly Sunday weigh-ins and fat loss metrics over 13 checkpoints.</p>
-<table class="tracker-table">
-<caption>Fat loss weekly tracker</caption>
-<tr><th>Week</th><th>Sunday weight</th><th>Weight change</th><th>Gym sessions</th><th>Avg calories</th><th>Dandruff check</th><th>Notes</th></tr>
-<tr><td>Week 1</td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
-<tr><td>Week 2</td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
-<tr><td>Week 3</td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
-<tr><td>Week 4</td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
-<tr><td>Week 5</td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
-<tr><td>Week 6</td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
-<tr><td>Week 7</td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
-<tr><td>Week 8</td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
-<tr><td>Week 9</td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
-<tr><td>Week 10</td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
-<tr><td>Week 11</td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
-<tr><td>Week 12</td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
-<tr><td>Week 13</td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
-</table>
+<div class="config-controls" style="margin-bottom: 1rem;">
+    <button id="export-config">Export Config</button>
+    <input type="file" id="import-config" accept=".json" style="display: none;">
+    <label for="import-config" style="cursor: pointer; padding: 0.5rem 1rem; background: #007acc; color: white; border-radius: 4px;">Import Config</label>
+</div>
+<!-- Table will be generated dynamically -->
 </div>
 
 <script src="script.js"></script>
+
+<script>
+let currentConfig = null;
+
+(async () => {
+    currentConfig = await loadTrackerConfig('fat-loss-config.json');
+    if (currentConfig) {
+        generateTrackerTable(currentConfig);
+        makeTableCellsEditable();
+        restorePageData();
+        attachStorageListeners();
+    }
+
+    // Export config
+    document.getElementById('export-config').addEventListener('click', () => {
+        if (!currentConfig) return;
+        const dataStr = JSON.stringify(currentConfig, null, 2);
+        const dataUri = 'data:application/json;charset=utf-8,'+ encodeURIComponent(dataStr);
+        const exportFileDefaultName = 'fat-loss-config.json';
+        const linkElement = document.createElement('a');
+        linkElement.setAttribute('href', dataUri);
+        linkElement.setAttribute('download', exportFileDefaultName);
+        linkElement.click();
+    });
+
+    // Import config
+    document.getElementById('import-config').addEventListener('change', (event) => {
+        const file = event.target.files[0];
+        if (!file) return;
+        const reader = new FileReader();
+        reader.onload = (e) => {
+            try {
+                const newConfig = JSON.parse(e.target.result);
+                currentConfig = newConfig;
+                generateTrackerTable(currentConfig);
+                makeTableCellsEditable();
+                restorePageData();
+                attachStorageListeners();
+            } catch (error) {
+                alert('Invalid JSON file');
+            }
+        };
+        reader.readAsText(file);
+    });
+})();
+</script>
 </body>
 </html>
